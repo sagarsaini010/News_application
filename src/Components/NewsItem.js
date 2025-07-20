@@ -2,10 +2,13 @@ import React, { Component } from "react";
 
 export default class NewsItem extends Component {
   render() {
-    let { title, description, imageUrl, newsUrl } = this.props;
+    let { title, description, imageUrl, newsUrl, author, date,source } = this.props;
     return (
       <>
-        <div className="card my-4" >
+        <div className="card my-4">
+           <span className="position-absolute top-0  translate-middle badge rounded-pill bg-danger" style={{left: '90%', zIndex:'1'}}>
+                {source}
+              </span>
           <img
             src={
               imageUrl
@@ -15,13 +18,20 @@ export default class NewsItem extends Component {
             className="card-img-top"
             alt={title}
             onError={(e) => {
-              e.target.src =
-               "https://picsum.photos/300/200";
+              e.target.src = "https://picsum.photos/300/200";
             }}
           />
           <div className="card-body">
-            <h5 className="card-title">{title}...</h5>
-            <p className="card-text">{description}...</p>
+            <h5 className="card-title">
+              {title?title:"No title"}{" "}
+            </h5>
+            <p className="card-text">{description?description:"No description"}</p>
+            <p className="card-text">
+              <small className="text-danger">
+                By {author ? author : "Unknown"} on{" "}
+                {new Date(date).toGMTString()}
+              </small>
+            </p>
             <a
               href={newsUrl}
               target="_blank"
@@ -31,7 +41,6 @@ export default class NewsItem extends Component {
               Read more
             </a>
           </div>
-        
         </div>
       </>
     );
